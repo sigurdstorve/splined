@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.11)
-project(QtSplineEditor)
+project(Splined)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
@@ -7,7 +7,7 @@ set(CMAKE_AUTOMOC ON)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5OpenGL REQUIRED)
 
-set(QtSplineEditor_SOURCES
+set(QtSplined_SOURCES
     SplineEditorApp.cpp
     main_gui.cpp
     widgets/SplineEditorNode.cpp
@@ -17,7 +17,7 @@ set(QtSplineEditor_SOURCES
     SplineDataModel.cpp
     )
 
-set(QtSplineEditor_HEADERS
+set(QtSplined_HEADERS
     SplineEditorApp.hpp
     widgets/SplineEditorNode.hpp
     widgets/SplineEditorScene.hpp
@@ -26,9 +26,9 @@ set(QtSplineEditor_HEADERS
     SplineDataModel.hpp
     )
 
-add_executable(QtSplineEditor
-               ${QtSplineEditor_SOURCES}
-               ${QtSplineEditor_HEADERS}
+add_executable(QtSplined
+               ${QtSplined_SOURCES}
+               ${QtSplined_HEADERS}
                )
 
-qt5_use_modules(QtSplineEditor Widgets OpenGL)               
+qt5_use_modules(QtSplined Widgets OpenGL)               
