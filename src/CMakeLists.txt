@@ -14,6 +14,7 @@ set(QtSplined_SOURCES
     widgets/SplineEditorScene.cpp
     widgets/SplineEditorView.cpp
     widgets/SplineEditorWidget.cpp
+    widgets/NodeEditorWidget.cpp
     SplineDataModel.cpp
     )
 
@@ -23,6 +24,7 @@ set(QtSplined_HEADERS
     widgets/SplineEditorScene.hpp
     widgets/SplineEditorView.hpp
     widgets/SplineEditorWidget.hpp
+    widgets/NodeEditorWidget.hpp
     SplineDataModel.hpp
     )
 
