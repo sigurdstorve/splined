@@ -15,10 +15,10 @@ SplineEditorWidget::SplineEditorWidget(QWidget * parent, Qt::WindowFlags f)
     : QWidget(parent, f)
 {
     auto h_layout      = new QHBoxLayout();
-    auto v_layout_row0 = new QVBoxLayout();
-    auto v_layout_row1 = new QVBoxLayout();
+    auto v_layout_col0 = new QVBoxLayout();
+    auto v_layout_col1 = new QVBoxLayout();
 
-    // initialize graphics view framework stuff    
+    // initialize graphics view framework stuff   
     m_scene = new SplineEditorScene(-1.0, -1.0, 2.0, 2.0);
     m_view = new SplineEditorView(m_scene);
     m_view->setRenderHints( QPainter::Antialiasing | QPainter::SmoothPixmapTransform );
@@ -26,10 +26,10 @@ SplineEditorWidget::SplineEditorWidget(QWidget * parent, Qt::WindowFlags f)
     m_view->fitInView(m_scene->sceneRect());
     m_view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     
-    v_layout_row0->addWidget(m_view);
+    v_layout_col0->addWidget(m_view);
 
-    h_layout->addLayout(v_layout_row0);
-    h_layout->addLayout(v_layout_row1);
+    h_layout->addLayout(v_layout_col0);
+    h_layout->addLayout(v_layout_col1);
     setLayout(h_layout);
     draw_coordinate_axes();
     setup_connections();

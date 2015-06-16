@@ -5,6 +5,7 @@
 class SplineEditorView;
 class SplineEditorScene;
 class QGraphicsItem;
+class NodeEditorWidget;
 
 class SplineEditorWidget : public QWidget {
 Q_OBJECT
@@ -42,4 +43,5 @@ private:
     SplineEditorScene*      m_scene;
     QVector<QGraphicsItem*> m_node_items;
     QVector<QGraphicsItem*> m_line_items;
+    NodeEditorWidget*       m_node_editor;
 };
