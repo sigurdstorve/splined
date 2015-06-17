@@ -30,6 +30,8 @@ SplineEditorWidget::SplineEditorWidget(QWidget * parent, Qt::WindowFlags f)
     v_layout_col0->addWidget(m_view);
 
     m_knot_vector_editor = new KnotVectorWidget;
+    m_knot_vector_editor->setMaximumHeight(200);
+
     v_layout_col0->addWidget(m_knot_vector_editor);
 
     // column two: node editor
@@ -39,6 +41,9 @@ SplineEditorWidget::SplineEditorWidget(QWidget * parent, Qt::WindowFlags f)
         m_node_items[node_index]->setPos(new_pos);
         emit node_moved(node_index, new_pos);
     });
+    m_node_editor->setMaximumHeight(200);
+    m_node_editor->setMaximumWidth(200);
+
     v_layout_col1->addWidget(m_node_editor);
 
     h_layout->addLayout(v_layout_col0);
