@@ -110,11 +110,9 @@ void SplineEditorWidget::setup_connections() {
 }
 
 void SplineEditorWidget::on_node_selected(int node_index) {
-    m_node_editor->set_node_index(node_index);
-
     if ((node_index < 0) || (node_index >= m_node_items.size())) {
         throw std::runtime_error("on_node_selected(): Invalid node index");
     }
-
-    qDebug() << "Position of selected node is " << m_node_items[node_index]->scenePos();
+    m_node_editor->set_node_index(node_index);
+    m_node_editor->set_position(m_node_items[node_index]->scenePos());
 }

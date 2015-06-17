@@ -13,6 +13,11 @@ public:
 
     void set_node_index(int node_index);
 
+    void set_position(QPointF pos);
+
+    // Currently unused.
+    void set_weight(qreal w);
+
 private:
     QFormLayout*    m_form_layout;
     QLabel*         m_header_label;

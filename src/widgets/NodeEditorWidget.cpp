@@ -29,7 +29,13 @@ NodeEditorWidget::NodeEditorWidget(QWidget* parent, Qt::WindowFlags f)
 
 void NodeEditorWidget::set_node_index(int node_index) {
     m_header_label->setText("Node: " + QString::number(node_index));
-    m_x_editor->setText("TODO");
-    m_y_editor->setText("TODO");
-    m_w_editor->setText("TODO");
+}
+
+void NodeEditorWidget::set_position(QPointF pos) {
+    m_x_editor->setText(QString::number(pos.x()));
+    m_y_editor->setText(QString::number(pos.y()));
+}
+
+void NodeEditorWidget::set_weight(qreal w) {
+    m_w_editor->setText(QString::number(w));
 }
