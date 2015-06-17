@@ -38,6 +38,7 @@ void SplineEditorApp::setup_connections() {
     connect(m_editor_widget, &SplineEditorWidget::node_deleted, [&](int node_index) {
         m_spline_model->delete_node(node_index);
         m_editor_widget->update_from_model(m_spline_model);
+        m_editor_widget->update_rendered_spline(m_spline_model->render());
     });
 
     connect(m_editor_widget, &SplineEditorWidget::node_moved, [&](int node_index, QPointF new_pos) {

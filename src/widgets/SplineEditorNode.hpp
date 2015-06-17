@@ -21,6 +21,9 @@ signals:
     // The node has been selected by the user.
     void itemSelected(int node_id);
 
+    // User has pressed delete on a node
+    void itemDeleteRequest(int node_id);
+
 protected:
 
     virtual void keyPressEvent(QKeyEvent* event) Q_DECL_OVERRIDE;

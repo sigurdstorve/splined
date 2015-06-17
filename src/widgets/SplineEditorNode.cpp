@@ -4,6 +4,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QTransform>
 #include <QGraphicsSimpleTextItem>
+#include <QKeyEvent>
 #include "SplineEditorNode.hpp"
 
 SplineEditorNode::SplineEditorNode(qreal x, qreal y, qreal radius, int node_id, QGraphicsItem* parent)
@@ -23,7 +24,10 @@ SplineEditorNode::SplineEditorNode(qreal x, qreal y, qreal radius, int node_id, 
 }
 
 void SplineEditorNode::keyPressEvent(QKeyEvent* event) {
-    qDebug() << "Keypress event on a Node symbol: TODO: Handle";
+    if (event->key() == Qt::Key_Delete) {
+        emit itemDeleteRequest(m_node_id);
+        event->accept();
+    }
 }
 
 void SplineEditorNode::mouseReleaseEvent(QGraphicsSceneMouseEvent * event) {

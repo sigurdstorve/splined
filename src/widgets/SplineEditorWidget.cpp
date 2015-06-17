@@ -77,8 +77,11 @@ void SplineEditorWidget::update_from_model(SplineDataModel::ptr model) {
         // we want to be notified by this new node when it moves
         connect(node, SIGNAL(itemMoved(int, QPointF)), this, SIGNAL(node_moved(int, QPointF)));
 
-        // ...and when the user marks it by clicking on it.
+        // also when the user marks it by clicking on it.
         connect(node, SIGNAL(itemSelected(int)), this, SLOT(on_node_selected(int)));
+
+        // also when user presses the delete key on it
+        connect(node, SIGNAL(itemDeleteRequest(int)), this, SIGNAL(node_deleted(int)));
 
         m_scene->addItem(node);
         m_node_items.append(node);
