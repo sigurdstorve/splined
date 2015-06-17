@@ -130,7 +130,3 @@ void SplineEditorWidget::on_node_selected(int node_index) {
     m_node_editor->set_position(m_node_items[node_index]->scenePos());
     m_node_editor->setEnabled(true);
 }
-
-void SplineEditorWidget::on_node_edited() {
-    qDebug() << "Currently selected node has been edited from the widget";
-}
