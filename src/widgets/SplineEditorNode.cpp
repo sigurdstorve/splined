@@ -26,9 +26,9 @@ void SplineEditorNode::keyPressEvent(QKeyEvent* event) {
     qDebug() << "Keypress event on a Node symbol: TODO: Handle";
 }
 
-void SplineEditorNode::mousePressEvent(QGraphicsSceneMouseEvent * event) {
-    emit itemClicked(m_node_id);
-    QGraphicsEllipseItem::mousePressEvent(event);
+void SplineEditorNode::mouseReleaseEvent(QGraphicsSceneMouseEvent * event) {
+    emit itemSelected(m_node_id);
+    QGraphicsEllipseItem::mouseReleaseEvent(event);
 }
 
 QVariant SplineEditorNode::itemChange(GraphicsItemChange change, const QVariant& value) {

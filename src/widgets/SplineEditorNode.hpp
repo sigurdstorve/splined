@@ -18,14 +18,14 @@ signals:
     // The node has changed it's position.
     void itemMoved(int node_id, QPointF pos);
 
-    // The node has been clicked on.
-    void itemClicked(int node_id);
+    // The node has been selected by the user.
+    void itemSelected(int node_id);
 
 protected:
 
     virtual void keyPressEvent(QKeyEvent* event) Q_DECL_OVERRIDE;
 
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent* event) Q_DECL_OVERRIDE;
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) Q_DECL_OVERRIDE;
 
     // Hijack in order to send out a signal to refresh the spline rendering.
     virtual QVariant itemChange(GraphicsItemChange change, const QVariant& value) Q_DECL_OVERRIDE;

@@ -68,7 +68,7 @@ void SplineEditorWidget::update_from_model(SplineDataModel::ptr model) {
         connect(node, SIGNAL(itemMoved(int, QPointF)), this, SIGNAL(node_moved(int, QPointF)));
 
         // ...and when the user marks it by clicking on it.
-        connect(node, SIGNAL(itemClicked(int)), this, SLOT(on_node_selected(int)));
+        connect(node, SIGNAL(itemSelected(int)), this, SLOT(on_node_selected(int)));
 
         m_scene->addItem(node);
         m_node_items.append(node);
@@ -111,4 +111,10 @@ void SplineEditorWidget::setup_connections() {
 
 void SplineEditorWidget::on_node_selected(int node_index) {
     m_node_editor->set_node_index(node_index);
+
+    if ((node_index < 0) || (node_index >= m_node_items.size())) {
+        throw std::runtime_error("on_node_selected(): Invalid node index");
+    }
+
+    qDebug() << "Position of selected node is " << m_node_items[node_index]->scenePos();
 }
