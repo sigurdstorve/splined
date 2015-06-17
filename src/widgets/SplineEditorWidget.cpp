@@ -7,6 +7,7 @@
 #include "widgets/SplineEditorScene.hpp"
 #include "widgets/SplineEditorNode.hpp"
 #include "widgets/NodeEditorWidget.hpp"
+#include "widgets/KnotVectorWidget.hpp"
 #include "SplineDataModel.hpp"
 
 // NOTE FOR FUTURE: The coordinates in QGraphicsEllipseItem is in 
@@ -19,7 +20,7 @@ SplineEditorWidget::SplineEditorWidget(QWidget * parent, Qt::WindowFlags f)
     auto v_layout_col0 = new QVBoxLayout();
     auto v_layout_col1 = new QVBoxLayout();
 
-    // column one: graphics view framework stuff   
+    // column one: graphics view framework stuff and knot vector editor
     m_scene = new SplineEditorScene(-1.0, -1.0, 2.0, 2.0);
     m_view = new SplineEditorView(m_scene);
     m_view->setRenderHints( QPainter::Antialiasing | QPainter::SmoothPixmapTransform );
@@ -27,6 +28,9 @@ SplineEditorWidget::SplineEditorWidget(QWidget * parent, Qt::WindowFlags f)
     m_view->fitInView(m_scene->sceneRect());
     m_view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     v_layout_col0->addWidget(m_view);
+
+    m_knot_vector_editor = new KnotVectorWidget;
+    v_layout_col0->addWidget(m_knot_vector_editor);
 
     // column two: node editor
     m_node_editor = new NodeEditorWidget;
