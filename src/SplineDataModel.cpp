@@ -140,7 +140,7 @@ void SplineDataModel::update_knots() {
         throw std::runtime_error("Closed knot vector support not yet implemented");
         break;
     case KnotVectorType::OPEN:
-        throw std::runtime_error("Open knot vector support not yet implemented");
+        temp_knots = uniformOpenKnotVector(num_points, m_degree, t0, t1, true);
         break;
     case KnotVectorType::CUSTOM:
         throw std::runtime_error("Custom knot vector support not yet implemented");
@@ -173,8 +173,10 @@ void SplineDataModel::precompute_basis_functions() {
 }
 
 void SplineDataModel::set_knot_vector_type(KnotVectorType type) {
+    qDebug() << "changed knot vector type";
     m_knot_vector_type = type;
     update_knots();
+    precompute_basis_functions();
 }
 
 SplineDataModel::ptr SplineModelUtils::Load(const QString& filename) {
