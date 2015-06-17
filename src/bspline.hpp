@@ -181,6 +181,24 @@ std::vector<T> uniformRegularKnotVector(int numPoints,
     return knots;
 }
 
+// Create a uniformly spaced open knot vector on [tStart, tEnd]
+template <typename T>
+std::vector<T> uniformOpenKnotVector(int numPoints,
+                                     int degree,
+                                     T tStart=0.0,
+                                     T tEnd=1.0,
+                                     bool endHack=false) {
+
+    const auto num_knots = numPoints + degree + 1;
+    std::vector<T> res;
+    linspace(tStart, tEnd, num_knots, res);
+    if (endHack) {
+        res[res.size()-1] += static_cast<T>(1.0);
+    }
+    return res;
+}
+
+
 /*
 Return the control point abscissa for the control polygon
 of a one-dimensional spline.
