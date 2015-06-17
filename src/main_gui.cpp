@@ -7,7 +7,8 @@
 
 void startGuiApplication(int argc, char** argv) {
     try {
-    
+        QLocale::setDefault(QLocale::c()); // always use dot as decimal separator
+
         QApplication app(argc, argv);
         SplineEditorApp mainWin;
         

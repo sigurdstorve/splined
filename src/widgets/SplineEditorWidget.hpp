@@ -39,6 +39,10 @@ public:
     // or -1 if no node is selected.
     int get_selected_node() const;
 
+protected slots:
+    // The user has edited a node from the node editor widget.
+    void on_node_edited();
+
 protected:
     void draw_coordinate_axes();
 

@@ -30,6 +30,11 @@ SplineEditorWidget::SplineEditorWidget(QWidget * parent, Qt::WindowFlags f)
 
     // column two: node editor
     m_node_editor = new NodeEditorWidget;
+    m_node_editor->setEnabled(false);
+    connect(m_node_editor, &NodeEditorWidget::node_manually_edited, [&](int node_index, QPointF new_pos) {
+        m_node_items[node_index]->setPos(new_pos);
+        emit node_moved(node_index, new_pos);
+    });
     v_layout_col1->addWidget(m_node_editor);
 
     h_layout->addLayout(v_layout_col0);
@@ -50,6 +55,7 @@ void SplineEditorWidget::remove_old_items(QVector<QGraphicsItem*>& items) {
 // For now: only nodes. In future: knots and degree and weights.
 void SplineEditorWidget::update_from_model(SplineDataModel::ptr model) {
     remove_old_items(m_node_items);
+    m_node_editor->setEnabled(false);
 
     auto control_points = model->get_control_points();
     auto num_nodes = control_points.size();
@@ -115,4 +121,9 @@ void SplineEditorWidget::on_node_selected(int node_index) {
     }
     m_node_editor->set_index(node_index);
     m_node_editor->set_position(m_node_items[node_index]->scenePos());
+    m_node_editor->setEnabled(true);
+}
+
+void SplineEditorWidget::on_node_edited() {
+    qDebug() << "Currently selected node has been edited from the widget";
 }
