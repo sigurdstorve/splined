@@ -11,7 +11,7 @@ Q_OBJECT
 public:
     NodeEditorWidget(QWidget* parent = 0, Qt::WindowFlags f = 0);
 
-    void set_node_index(int node_index);
+    void set_index(int node_index);
 
     void set_position(QPointF pos);
 

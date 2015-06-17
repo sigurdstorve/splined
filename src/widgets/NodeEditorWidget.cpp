@@ -27,8 +27,8 @@ NodeEditorWidget::NodeEditorWidget(QWidget* parent, Qt::WindowFlags f)
     setLayout(v_layout);
 }
 
-void NodeEditorWidget::set_node_index(int node_index) {
-    m_header_label->setText("Node: " + QString::number(node_index));
+void NodeEditorWidget::set_index(int node_index) {
+    m_header_label->setText("Node index: " + QString::number(node_index));
 }
 
 void NodeEditorWidget::set_position(QPointF pos) {
