@@ -61,7 +61,9 @@ QVector<qreal> tokenize(const QString& tokens) {
 SplineDataModel::SplineDataModel() 
     : m_visualization_res(1000),
         m_visualization_start(0.0),
-        m_visualization_stop(1.0), // weird crashes if 0.999
+        m_visualization_stop(1.0),
+        m_autogen_knot_start(0.0),
+        m_autogen_knot_stop(1.0),
         m_degree(0),
         m_knot_vector_type(KnotVectorType::CLAMPED)
 {
@@ -94,6 +96,7 @@ void SplineDataModel::set_render_resolution(int new_res) {
 }
 
 QVector<QPointF> SplineDataModel::render() const {
+    
     QVector<QPointF> res(m_visualization_res);
     const auto num_control_points = m_control_points.size();
 
@@ -127,8 +130,8 @@ void SplineDataModel::set_control_points(const QVector<QPointF>& new_points) {
 void SplineDataModel::update_knots() {
     using namespace bspline_storve;
 
-    const auto t0 = m_visualization_start;
-    const auto t1 = m_visualization_stop;
+    const auto t0 = m_autogen_knot_start;
+    const auto t1 = m_autogen_knot_stop;
     const auto num_points = m_control_points.size();
     
     std::vector<qreal> temp_knots;
@@ -173,11 +176,24 @@ void SplineDataModel::precompute_basis_functions() {
 }
 
 void SplineDataModel::set_knot_vector_type(KnotVectorType type) {
-    qDebug() << "changed knot vector type";
     m_knot_vector_type = type;
     update_knots();
     precompute_basis_functions();
 }
+
+void SplineDataModel::set_eval_limits(qreal t_min, qreal t_max) {
+    m_visualization_start = t_min;
+    m_visualization_stop  = t_max;
+    precompute_basis_functions();
+}
+
+void SplineDataModel::set_autogen_knot_vector_limits(qreal t_min, qreal t_max) {
+    m_autogen_knot_start = t_min;
+    m_autogen_knot_stop  = t_max;
+    update_knots();
+    precompute_basis_functions();
+}
+
 
 SplineDataModel::ptr SplineModelUtils::Load(const QString& filename) {
     SplineDataModel::ptr loaded_model = SplineDataModel::ptr(new SplineDataModel);

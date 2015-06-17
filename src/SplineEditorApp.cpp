@@ -29,7 +29,6 @@ SplineEditorApp::SplineEditorApp(QWidget* parent)
 
 void SplineEditorApp::setup_connections() {
     connect (m_editor_widget, &SplineEditorWidget::node_added, [&](QPointF pos) {
-        qDebug() << "Added node in " << pos;
         m_spline_model->add_node(pos);
         m_editor_widget->update_from_model(m_spline_model);
         m_editor_widget->update_rendered_spline(m_spline_model->render());
@@ -48,6 +47,16 @@ void SplineEditorApp::setup_connections() {
 
     connect(m_editor_widget, &SplineEditorWidget::knot_vector_type_changed, [&](KnotVectorType type) {
         m_spline_model->set_knot_vector_type(type);
+    });
+
+    connect(m_editor_widget, &SplineEditorWidget::eval_interval_changed, [&](qreal t0, qreal t1) {
+        m_spline_model->set_eval_limits(t0, t1);
+        m_editor_widget->update_rendered_spline(m_spline_model->render());
+    });
+
+    connect(m_editor_widget, &SplineEditorWidget::auto_knot_limits_changed, [&](qreal t0, qreal t1) {
+        m_spline_model->set_autogen_knot_vector_limits(t0, t1);
+        m_editor_widget->update_rendered_spline(m_spline_model->render());
     });
 }
 

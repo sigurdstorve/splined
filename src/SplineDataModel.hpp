@@ -54,6 +54,12 @@ public:
     // Set the knot vector type
     void set_knot_vector_type(KnotVectorType type);
 
+    // Define the parameter range used for spline evaluation.
+    void set_eval_limits(qreal t_min, qreal t_max);
+
+    // Define the parameter range used when auto-generating knot vectors.
+    void set_autogen_knot_vector_limits(qreal t_min, qreal t_max);
+
 protected:
     // Update the knot vector according to type so that it
     // matches the degree and number of control points.
@@ -69,8 +75,12 @@ private:
     QVector<QPointF>            m_control_points;
     QVector<qreal>              m_knots;
     int                         m_degree;
+    // The range of parameter values used by render()
     qreal                       m_visualization_start;
     qreal                       m_visualization_stop;
+    // The range of parameter values used when auto-generating knot vectors.
+    qreal                       m_autogen_knot_start;
+    qreal                       m_autogen_knot_stop;
     int                         m_visualization_res;
     QVector<QVector<qreal> >    m_eval_basis; // [time_no][func_no]
     KnotVectorType              m_knot_vector_type;

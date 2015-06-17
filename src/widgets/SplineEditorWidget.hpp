@@ -26,6 +26,12 @@ signals:
     // user has selected a new knot vector type.
     void knot_vector_type_changed(KnotVectorType type);
 
+    // user has changed the spline evaluation limits.
+    void eval_interval_changed(qreal t0, qreal t1);
+
+    // user has changed the limits to use when auto-generating knot vectors.
+    void auto_knot_limits_changed(qreal, qreal);
+
 public slots:
     // user has marked a node by clicking on it.
     void on_node_selected(int node_index);
