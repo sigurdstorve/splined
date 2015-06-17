@@ -6,6 +6,7 @@
 #include "widgets/SplineEditorView.hpp"
 #include "widgets/SplineEditorScene.hpp"
 #include "widgets/SplineEditorNode.hpp"
+#include "widgets/NodeEditorWidget.hpp"
 #include "SplineDataModel.hpp"
 
 // NOTE FOR FUTURE: The coordinates in QGraphicsEllipseItem is in 
@@ -18,15 +19,18 @@ SplineEditorWidget::SplineEditorWidget(QWidget * parent, Qt::WindowFlags f)
     auto v_layout_col0 = new QVBoxLayout();
     auto v_layout_col1 = new QVBoxLayout();
 
-    // initialize graphics view framework stuff   
+    // column one: graphics view framework stuff   
     m_scene = new SplineEditorScene(-1.0, -1.0, 2.0, 2.0);
     m_view = new SplineEditorView(m_scene);
     m_view->setRenderHints( QPainter::Antialiasing | QPainter::SmoothPixmapTransform );
     m_view->setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers | QGL::DirectRendering)));
     m_view->fitInView(m_scene->sceneRect());
     m_view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-    
     v_layout_col0->addWidget(m_view);
+
+    // column two: node editor
+    m_node_editor = new NodeEditorWidget;
+    v_layout_col1->addWidget(m_node_editor);
 
     h_layout->addLayout(v_layout_col0);
     h_layout->addLayout(v_layout_col1);
@@ -60,8 +64,11 @@ void SplineEditorWidget::update_from_model(SplineDataModel::ptr model) {
         node->setFlag(QGraphicsItem::ItemIsFocusable, true);
         node->setFlag(QGraphicsItem::ItemSendsScenePositionChanges, true);
     
-        // we want to be notified by this new node
+        // we want to be notified by this new node when it moves
         connect(node, SIGNAL(itemMoved(int, QPointF)), this, SIGNAL(node_moved(int, QPointF)));
+
+        // ...and when the user marks it by clicking on it.
+        connect(node, SIGNAL(itemClicked(int)), this, SLOT(on_node_selected(int)));
 
         m_scene->addItem(node);
         m_node_items.append(node);
@@ -99,13 +106,9 @@ void SplineEditorWidget::draw_coordinate_axes() {
 }
 
 void SplineEditorWidget::setup_connections() {
-    // we want to know if user has clicked on a node
-    // TODO: connect on a Node-by-Node basis and connect on creation
-    connect(m_view, &SplineEditorView::userClickedOnNode, [&](int node_id) {
-        qDebug() << "User clicked on node " << node_id << ". TODO: Forward it.";
-    });
+    connect(m_view, SIGNAL(userClickedOnEmptySpace(QPointF)), this, SIGNAL(node_added(QPointF)));
+}
 
-    connect(m_view, &SplineEditorView::userClickedOnEmptySpace, [&](QPointF pos) {
-        emit node_added(pos);
-    });
+void SplineEditorWidget::on_node_selected(int node_index) {
+    m_node_editor->set_node_index(node_index);
 }

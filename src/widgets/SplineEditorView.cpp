@@ -18,7 +18,6 @@ void SplineEditorView::mousePressEvent(QMouseEvent * event) {
     if (clicked_item == 0) {
         emit userClickedOnEmptySpace(scene_pos);
     } else {
-        emit userClickedOnNode(1);
         QGraphicsView::mousePressEvent(event);
     }
 }

@@ -20,12 +20,8 @@ public slots:
     void zoomOut() { scale(1/1.2, 1/1.2); }
 
 signals:
-
-    // User clicked on empty space. TODO: Use QPointF
+    // User clicked on empty space.
     void userClickedOnEmptySpace(QPointF);
-
-    // User clicked on a node.
-    void userClickedOnNode(int id);
 
 
 protected:

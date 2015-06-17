@@ -3,6 +3,9 @@
 #include <QObject>
 #include <QGraphicsEllipseItem>
 
+class QKeyEvent;
+class QGraphicsSceneMouseEvent;
+
 class SplineEditorNode : public QObject,
                          public QGraphicsEllipseItem {
 Q_OBJECT
@@ -12,13 +15,17 @@ public:
     int get_id() const { return m_node_id; }
 
 signals:
-
-    // The node has changes it's position.
+    // The node has changed it's position.
     void itemMoved(int node_id, QPointF pos);
+
+    // The node has been clicked on.
+    void itemClicked(int node_id);
 
 protected:
 
     virtual void keyPressEvent(QKeyEvent* event) Q_DECL_OVERRIDE;
+
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent* event) Q_DECL_OVERRIDE;
 
     // Hijack in order to send out a signal to refresh the spline rendering.
     virtual QVariant itemChange(GraphicsItemChange change, const QVariant& value) Q_DECL_OVERRIDE;
