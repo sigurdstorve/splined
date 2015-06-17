@@ -4,6 +4,7 @@
 #include <QPoint>
 #include <QVector>
 #include <QString>
+#include "KnotVectorType.hpp"
 
 // Forward declaration.
 class SplineDataModel;
@@ -50,6 +51,9 @@ public:
     // Set the control points.
     void set_control_points(const QVector<QPointF>& new_points);
 
+    // Set the knot vector type
+    void set_knot_vector_type(KnotVectorType type);
+
 protected:
     // Update the knot vector according to type so that it
     // matches the degree and number of control points.
@@ -69,6 +73,7 @@ private:
     qreal                       m_visualization_stop;
     int                         m_visualization_res;
     QVector<QVector<qreal> >    m_eval_basis; // [time_no][func_no]
+    KnotVectorType              m_knot_vector_type;
 
 public:
     friend SplineDataModel::ptr SplineModelUtils::Load(const QString& filename);

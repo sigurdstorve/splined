@@ -32,6 +32,20 @@ KnotVectorWidget::KnotVectorWidget(QWidget* parent, Qt::WindowFlags f)
 
     setLayout(v_layout);
     autogenerate_headers();
+
+    // setup signals
+    connect(rb_clamped, &QRadioButton::clicked, [&]() {
+        emit knot_vector_type_changed(KnotVectorType::CLAMPED);
+    });
+    connect(rb_open, &QRadioButton::clicked, [&]() {
+        emit knot_vector_type_changed(KnotVectorType::OPEN);
+    });
+    connect (rb_closed, &QRadioButton::clicked, [&]() {
+        emit knot_vector_type_changed(KnotVectorType::CLOSED);
+    });
+    connect (rb_custom, &QRadioButton::clicked, [&]() {
+        emit knot_vector_type_changed(KnotVectorType::CUSTOM);
+    });
 }
 
 void KnotVectorWidget::autogenerate_headers() {

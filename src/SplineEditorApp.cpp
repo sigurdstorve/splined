@@ -45,6 +45,10 @@ void SplineEditorApp::setup_connections() {
         m_spline_model->move_node(node_index, new_pos);
         m_editor_widget->update_rendered_spline(m_spline_model->render());
     });
+
+    connect(m_editor_widget, &SplineEditorWidget::knot_vector_type_changed, [&](KnotVectorType type) {
+        m_spline_model->set_knot_vector_type(type);
+    });
 }
 
 void SplineEditorApp::setup_menus() {

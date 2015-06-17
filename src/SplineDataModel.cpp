@@ -62,7 +62,8 @@ SplineDataModel::SplineDataModel()
     : m_visualization_res(1000),
         m_visualization_start(0.0),
         m_visualization_stop(1.0), // weird crashes if 0.999
-        m_degree(0)
+        m_degree(0),
+        m_knot_vector_type(KnotVectorType::CLAMPED)
 {
 }
 
@@ -125,13 +126,30 @@ void SplineDataModel::set_control_points(const QVector<QPointF>& new_points) {
 
 void SplineDataModel::update_knots() {
     using namespace bspline_storve;
-        
-    // TODO: Test on type of knot vector (periodic, closed, custom, ...)
-    const auto num_points = m_control_points.size();
+
     const auto t0 = m_visualization_start;
     const auto t1 = m_visualization_stop;
-    const auto temp = uniformRegularKnotVector(num_points, m_degree, t0, t1, true);
-    m_knots = QVector<qreal>::fromStdVector(temp);
+    const auto num_points = m_control_points.size();
+    
+    std::vector<qreal> temp_knots;
+    switch(m_knot_vector_type) {
+    case KnotVectorType::CLAMPED:
+        temp_knots = uniformRegularKnotVector(num_points, m_degree, t0, t1, true);
+        break;
+    case KnotVectorType::CLOSED:
+        throw std::runtime_error("Closed knot vector support not yet implemented");
+        break;
+    case KnotVectorType::OPEN:
+        throw std::runtime_error("Open knot vector support not yet implemented");
+        break;
+    case KnotVectorType::CUSTOM:
+        throw std::runtime_error("Custom knot vector support not yet implemented");
+        break;
+    default:
+        throw std::runtime_error("Unknown knot vector type.");
+    }
+
+    m_knots = QVector<qreal>::fromStdVector(temp_knots);
 }
 
 void SplineDataModel::check_node_index(int node_index) {
@@ -152,6 +170,11 @@ void SplineDataModel::precompute_basis_functions() {
             m_eval_basis[time_no][func_no] = bspline_storve::bsplineBasis(func_no, m_degree, cur_time, temp_knots);
         }
     }
+}
+
+void SplineDataModel::set_knot_vector_type(KnotVectorType type) {
+    m_knot_vector_type = type;
+    update_knots();
 }
 
 SplineDataModel::ptr SplineModelUtils::Load(const QString& filename) {

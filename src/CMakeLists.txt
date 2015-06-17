@@ -28,6 +28,7 @@ set(QtSplined_HEADERS
     widgets/NodeEditorWidget.hpp
     widgets/KnotVectorWidget.hpp
     SplineDataModel.hpp
+    KnotVectorType.hpp
     )
 
 add_executable(QtSplined

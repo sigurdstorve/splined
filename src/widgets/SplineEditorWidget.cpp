@@ -31,6 +31,7 @@ SplineEditorWidget::SplineEditorWidget(QWidget * parent, Qt::WindowFlags f)
 
     m_knot_vector_editor = new KnotVectorWidget;
     m_knot_vector_editor->setMaximumHeight(200);
+    connect(m_knot_vector_editor, SIGNAL(knot_vector_type_changed(KnotVectorType)), this, SIGNAL(knot_vector_type_changed(KnotVectorType)));
 
     v_layout_col0->addWidget(m_knot_vector_editor);
 

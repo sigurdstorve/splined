@@ -22,6 +22,9 @@ signals:
 
     // user has requested to delete a node
     void node_deleted(int node_index);
+    
+    // user has selected a new knot vector type.
+    void knot_vector_type_changed(KnotVectorType type);
 
 public slots:
     // user has marked a node by clicking on it.
