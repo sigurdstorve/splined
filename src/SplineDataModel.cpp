@@ -140,7 +140,8 @@ void SplineDataModel::update_knots() {
         temp_knots = uniformRegularKnotVector(num_points, m_degree, t0, t1, true);
         break;
     case KnotVectorType::CLOSED:
-        throw std::runtime_error("Closed knot vector support not yet implemented");
+        qDebug() << "WARNING: t0 and t1 are ignore. Currently assumed to be [0, 1]";
+        temp_knots = closedKnotVector<qreal>(num_points, m_degree);
         break;
     case KnotVectorType::OPEN:
         temp_knots = uniformOpenKnotVector(num_points, m_degree, t0, t1, true);
