@@ -41,3 +41,8 @@ QVariant SplineEditorNode::itemChange(GraphicsItemChange change, const QVariant&
     }
     return QGraphicsEllipseItem::itemChange(change, value);
 }
+
+void SplineEditorNode::set_position(int /*position*/, QPointF new_pos) {
+    qDebug() << "TODO: Move node " << m_node_id << " from " << pos() << " to " << new_pos;
+    setPos(new_pos);
+}

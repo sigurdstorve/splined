@@ -8,6 +8,7 @@
 #include "widgets/SplineEditorNode.hpp"
 #include "widgets/NodeEditorWidget.hpp"
 #include "widgets/KnotVectorWidget.hpp"
+#include "widgets/SettingsWidget.hpp"
 #include "SplineDataModel.hpp"
 
 // NOTE FOR FUTURE: The coordinates in QGraphicsEllipseItem is in 
@@ -38,7 +39,7 @@ SplineEditorWidget::SplineEditorWidget(QWidget * parent, Qt::WindowFlags f)
 
     v_layout_col0->addWidget(m_knot_vector_editor);
 
-    // column two: node editor
+    // column two: node editor and settings widget
     m_node_editor = new NodeEditorWidget;
     m_node_editor->setEnabled(false);
     connect(m_node_editor, &NodeEditorWidget::node_manually_edited, [&](int node_index, QPointF new_pos) {
@@ -49,6 +50,11 @@ SplineEditorWidget::SplineEditorWidget(QWidget * parent, Qt::WindowFlags f)
     m_node_editor->setMaximumWidth(200);
 
     v_layout_col1->addWidget(m_node_editor);
+
+    m_settings_widget = new SettingsWidget;
+    m_settings_widget->setMaximumWidth(200);
+    m_settings_widget->setMaximumHeight(200);
+    v_layout_col1->addWidget(m_settings_widget);
 
     h_layout->addLayout(v_layout_col0);
     h_layout->addLayout(v_layout_col1);
@@ -92,6 +98,22 @@ void SplineEditorWidget::update_from_model(SplineDataModel::const_ptr model) {
 
         // also when user presses the delete key on it
         connect(node, SIGNAL(itemDeleteRequest(int)), this, SIGNAL(node_deleted(int)));
+
+        // should some of them be linked?
+        if (m_settings_widget->get_join_ends()) {
+            const auto degree = model->get_degree();
+            if (node_index >= num_nodes - degree) {
+                int node_to_mirror =  degree - (num_nodes - node_index);
+                qDebug() << "Node " << node_index << " will mirror node " << node_to_mirror;
+                auto casted_src_node = dynamic_cast<SplineEditorNode*>(m_node_items[node_to_mirror]);
+                connect(casted_src_node, SIGNAL(itemMoved(int, QPointF)), node, SLOT(set_position(int, QPointF)));
+
+                // then it should only be possible to move the nodes that are mirrored
+                qDebug() << "Moving node from " << node->pos() << " to " << casted_src_node->pos();
+                node->setPos(casted_src_node->pos());
+                node->setVisible(false);
+            }
+        }
 
         m_scene->addItem(node);
         m_node_items.append(node);

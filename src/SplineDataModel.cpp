@@ -302,3 +302,6 @@ void SplineModelUtils::Save(const QString& filename, SplineDataModel::ptr spline
     }
 }
 
+int SplineDataModel::get_degree() const {
+    return m_degree;
+}

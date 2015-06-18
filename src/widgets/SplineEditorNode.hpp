@@ -24,6 +24,10 @@ signals:
     // User has pressed delete on a node
     void itemDeleteRequest(int node_id);
 
+public slots:
+    // Dummy node index since signal is forwarded.
+    void set_position(int node_index, QPointF new_pos);
+
 protected:
 
     virtual void keyPressEvent(QKeyEvent* event) Q_DECL_OVERRIDE;

@@ -64,6 +64,9 @@ public:
     // Define the parameter range used when auto-generating knot vectors.
     void set_autogen_knot_vector_limits(qreal t_min, qreal t_max);
 
+    // Returns the degree of the model
+    int get_degree() const;
+
 protected:
     // Update the knot vector according to type so that it
     // matches the degree and number of control points.

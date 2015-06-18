@@ -7,6 +7,7 @@ class SplineEditorScene;
 class QGraphicsItem;
 class NodeEditorWidget;
 class KnotVectorWidget;
+class SettingsWidget;
 
 class SplineEditorWidget : public QWidget {
 Q_OBJECT
@@ -67,4 +68,5 @@ private:
     QVector<QGraphicsItem*> m_line_items;
     NodeEditorWidget*       m_node_editor;
     KnotVectorWidget*       m_knot_vector_editor;
+    SettingsWidget*         m_settings_widget;
 };
