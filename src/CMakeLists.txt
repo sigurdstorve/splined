@@ -29,6 +29,7 @@ set(QtSplined_HEADERS
     widgets/KnotVectorWidget.hpp
     SplineDataModel.hpp
     KnotVectorType.hpp
+    bspline.hpp
     )
 
 add_executable(QtSplined
