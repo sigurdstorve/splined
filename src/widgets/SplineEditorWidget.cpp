@@ -84,7 +84,7 @@ void SplineEditorWidget::update_from_model(SplineDataModel::const_ptr model) {
     node_pen.setWidth(0);
     for (int node_index = 0; node_index < num_nodes; node_index++) {
         const auto p = control_points[node_index];
-        auto node = new SplineEditorNode(p.x(), p.y(), 0.02, node_index);
+        auto node = new SplineEditorNode(p.x(), p.y(), 0.03, node_index);
         node->setPen(node_pen);
         node->setFlag(QGraphicsItem::ItemIsMovable,   true);
         node->setFlag(QGraphicsItem::ItemIsFocusable, true);
@@ -143,8 +143,8 @@ void SplineEditorWidget::update_rendered_spline(const QVector<QPointF>& points) 
 
 
 void SplineEditorWidget::draw_coordinate_axes() {
-    auto x_axis = new QGraphicsLineItem(0.0, 0.0, 0.15, 0.0);
-    auto y_axis = new QGraphicsLineItem(0.0, 0.0, 0.0, 0.1);
+    auto x_axis = new QGraphicsLineItem(0.0, 0.0, 0.5, 0.0);
+    auto y_axis = new QGraphicsLineItem(0.0, 0.0, 0.0, 0.5);
     QPen pen;
     pen.setWidthF(0.002);
     x_axis->setPen(pen);

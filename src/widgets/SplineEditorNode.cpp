@@ -15,8 +15,8 @@ SplineEditorNode::SplineEditorNode(qreal x, qreal y, qreal radius, int node_id, 
     auto number = new QGraphicsSimpleTextItem(QString::number(node_id), this);
     auto bounding_rect = number->boundingRect();
     auto scale_factor = std::max(bounding_rect.width(), bounding_rect.height());
-    number->setScale(radius/scale_factor);
-    number->setPos(0.0, 0.0);
+    number->setScale(2.0*radius/scale_factor);
+    number->setPos(radius, radius);
 
     // Center it in its local coordinate system so that its position (in parent coordinate
     // system) is equal to the center of circle.
