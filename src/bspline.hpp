@@ -198,6 +198,18 @@ std::vector<T> uniformOpenKnotVector(int numPoints,
     return res;
 }
 
+// Create a knot vector for a closed spline curve intended to be
+// evaluated on the closed interval [t_start, t_end]
+template <typename T>
+std::vector<T> closedKnotVector(int numPoints,
+                                int degree) {
+
+    auto d = static_cast<T>(numPoints-degree);
+    std::vector<T> knots;
+    linspace(-degree/d, numPoints/d, numPoints+degree+1, knots);
+    return knots;
+}
+
 
 /*
 Return the control point abscissa for the control polygon
