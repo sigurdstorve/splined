@@ -16,6 +16,7 @@ set(QtSplined_SOURCES
     widgets/SplineEditorWidget.cpp
     widgets/NodeEditorWidget.cpp
     widgets/KnotVectorWidget.cpp
+    widgets/SettingsWidget.cpp
     SplineDataModel.cpp
     )
 
@@ -27,6 +28,7 @@ set(QtSplined_HEADERS
     widgets/SplineEditorWidget.hpp
     widgets/NodeEditorWidget.hpp
     widgets/KnotVectorWidget.hpp
+    widgets/SettingsWidget.hpp
     SplineDataModel.hpp
     KnotVectorType.hpp
     bspline.hpp
