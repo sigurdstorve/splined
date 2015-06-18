@@ -109,8 +109,8 @@ void SplineEditorWidget::update_from_model(SplineDataModel::const_ptr model) {
                 connect(casted_src_node, SIGNAL(itemMoved(int, QPointF)), node, SLOT(set_position(int, QPointF)));
 
                 // then it should only be possible to move the nodes that are mirrored
-                qDebug() << "Moving node from " << node->pos() << " to " << casted_src_node->pos();
-                node->setPos(casted_src_node->pos());
+                auto mirrored_pos = casted_src_node->pos();
+                emit node_moved(node_index, mirrored_pos);
                 node->setVisible(false);
             }
         }
