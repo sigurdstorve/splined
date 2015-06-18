@@ -194,6 +194,9 @@ void SplineDataModel::set_autogen_knot_vector_limits(qreal t_min, qreal t_max) {
     precompute_basis_functions();
 }
 
+QVector<qreal> SplineDataModel::get_knot_vector() const {
+    return m_knots;
+}
 
 SplineDataModel::ptr SplineModelUtils::Load(const QString& filename) {
     SplineDataModel::ptr loaded_model = SplineDataModel::ptr(new SplineDataModel);

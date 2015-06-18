@@ -47,6 +47,8 @@ void SplineEditorApp::setup_connections() {
 
     connect(m_editor_widget, &SplineEditorWidget::knot_vector_type_changed, [&](KnotVectorType type) {
         m_spline_model->set_knot_vector_type(type);
+        m_editor_widget->update_from_model(m_spline_model);
+        m_editor_widget->update_rendered_spline(m_spline_model->render());
     });
 
     connect(m_editor_widget, &SplineEditorWidget::eval_interval_changed, [&](qreal t0, qreal t1) {

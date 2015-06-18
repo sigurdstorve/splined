@@ -14,7 +14,7 @@ KnotVectorWidget::KnotVectorWidget(QWidget* parent, Qt::WindowFlags f)
 {
     auto v_layout = new QVBoxLayout;
 
-    m_table_widget = new QTableWidget(1, 10);
+    m_table_widget = new QTableWidget;
     v_layout->addWidget(m_table_widget);
 
     // horizontal layout holding radio button group and misc. knot-related stuff.
@@ -92,6 +92,7 @@ KnotVectorWidget::KnotVectorWidget(QWidget* parent, Qt::WindowFlags f)
 
 }
 
+// TODO: Not needed since indices is shown?
 void KnotVectorWidget::autogenerate_headers() {
     //QStringList he
     /// TODO:
@@ -109,3 +110,12 @@ void KnotVectorWidget::emit_limits() {
     emit eval_interval_changed(t0, t1);
 }
 
+void KnotVectorWidget::update_knots(const QVector<qreal>& new_knots) {
+    const auto num_knots = new_knots.size();
+    m_table_widget->setColumnCount(num_knots);
+    m_table_widget->setRowCount(1);
+    for (int i = 0; i < num_knots; i++) {
+        auto item = new QTableWidgetItem(QString("%1").arg(new_knots[i]));
+        m_table_widget->setItem(0, i, item);
+    }
+}

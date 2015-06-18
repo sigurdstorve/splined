@@ -18,6 +18,9 @@ signals:
 
     void auto_knot_limits_changed(qreal t0, qreal t1);
 
+public:
+    void update_knots(const QVector<qreal>& new_knots);
+
 private:
     void autogenerate_headers();
 

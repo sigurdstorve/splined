@@ -22,7 +22,8 @@ namespace SplineModelUtils {
 
 class SplineDataModel {
 public:
-    typedef std::shared_ptr<SplineDataModel> ptr;
+    typedef std::shared_ptr<SplineDataModel>       ptr;
+    typedef std::shared_ptr<const SplineDataModel> const_ptr;
 
     SplineDataModel();
 
@@ -53,6 +54,9 @@ public:
 
     // Set the knot vector type
     void set_knot_vector_type(KnotVectorType type);
+
+    // Returns the knot vector
+    QVector<qreal> get_knot_vector() const;
 
     // Define the parameter range used for spline evaluation.
     void set_eval_limits(qreal t_min, qreal t_max);

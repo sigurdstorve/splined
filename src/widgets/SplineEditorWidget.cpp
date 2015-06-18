@@ -32,8 +32,8 @@ SplineEditorWidget::SplineEditorWidget(QWidget * parent, Qt::WindowFlags f)
     m_knot_vector_editor = new KnotVectorWidget;
     m_knot_vector_editor->setMaximumHeight(200);
     connect(m_knot_vector_editor, SIGNAL(knot_vector_type_changed(KnotVectorType)), this, SIGNAL(knot_vector_type_changed(KnotVectorType)));
-    connect(m_knot_vector_editor, SIGNAL(eval_interval_changed(qreal, qreal)), this, SIGNAL(eval_interval_changed(qreal, qreal)));
-    connect(m_knot_vector_editor, SIGNAL(auto_knot_limits_changed(qreal, qreal)), this, SIGNAL(auto_knot_limits_changed(qreal, qreal)));
+    connect(m_knot_vector_editor, SIGNAL(eval_interval_changed(qreal, qreal)),      this, SIGNAL(eval_interval_changed(qreal, qreal)));
+    connect(m_knot_vector_editor, SIGNAL(auto_knot_limits_changed(qreal, qreal)),   this, SIGNAL(auto_knot_limits_changed(qreal, qreal)));
 
 
     v_layout_col0->addWidget(m_knot_vector_editor);
@@ -65,14 +65,15 @@ void SplineEditorWidget::remove_old_items(QVector<QGraphicsItem*>& items) {
     items.clear();
 }
 
-// For now: only nodes. In future: knots and degree and weights.
-void SplineEditorWidget::update_from_model(SplineDataModel::ptr model) {
+// For now: only nodes and knot vector. In future: degree and weights.
+void SplineEditorWidget::update_from_model(SplineDataModel::const_ptr model) {
     remove_old_items(m_node_items);
     m_node_editor->setEnabled(false);
 
     auto control_points = model->get_control_points();
     auto num_nodes = control_points.size();
 
+    // update nodes
     QPen node_pen;
     node_pen.setWidth(0);
     for (int node_index = 0; node_index < num_nodes; node_index++) {
@@ -95,6 +96,9 @@ void SplineEditorWidget::update_from_model(SplineDataModel::ptr model) {
         m_scene->addItem(node);
         m_node_items.append(node);
     }
+
+    // update knot vector
+    m_knot_vector_editor->update_knots(model->get_knot_vector());
 }
 
 void SplineEditorWidget::update_rendered_spline(const QVector<QPointF>& points) {
