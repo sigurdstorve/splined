@@ -32,6 +32,9 @@ signals:
     // user has changed the limits to use when auto-generating knot vectors.
     void auto_knot_limits_changed(qreal, qreal);
 
+    // user has edited the knot vector manually
+    void knot_vector_manually_edited(QVector<qreal>);
+
 public:
     
     // update the nodes according to the data model, e.g. to relect

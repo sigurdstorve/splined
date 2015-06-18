@@ -60,6 +60,10 @@ void SplineEditorApp::setup_connections() {
         m_spline_model->set_autogen_knot_vector_limits(t0, t1);
         m_editor_widget->update_rendered_spline(m_spline_model->render());
     });
+
+    connect(m_editor_widget, &SplineEditorWidget::knot_vector_manually_edited, [&](QVector<qreal> new_knots) {
+        qDebug() << "New knot vector: " << new_knots;
+    });
 }
 
 void SplineEditorApp::setup_menus() {

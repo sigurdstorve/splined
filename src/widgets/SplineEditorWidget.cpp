@@ -31,10 +31,10 @@ SplineEditorWidget::SplineEditorWidget(QWidget * parent, Qt::WindowFlags f)
 
     m_knot_vector_editor = new KnotVectorWidget;
     m_knot_vector_editor->setMaximumHeight(200);
-    connect(m_knot_vector_editor, SIGNAL(knot_vector_type_changed(KnotVectorType)), this, SIGNAL(knot_vector_type_changed(KnotVectorType)));
-    connect(m_knot_vector_editor, SIGNAL(eval_interval_changed(qreal, qreal)),      this, SIGNAL(eval_interval_changed(qreal, qreal)));
-    connect(m_knot_vector_editor, SIGNAL(auto_knot_limits_changed(qreal, qreal)),   this, SIGNAL(auto_knot_limits_changed(qreal, qreal)));
-
+    connect(m_knot_vector_editor, SIGNAL(knot_vector_type_changed(KnotVectorType)),    this, SIGNAL(knot_vector_type_changed(KnotVectorType)));
+    connect(m_knot_vector_editor, SIGNAL(eval_interval_changed(qreal, qreal)),         this, SIGNAL(eval_interval_changed(qreal, qreal)));
+    connect(m_knot_vector_editor, SIGNAL(auto_knot_limits_changed(qreal, qreal)),      this, SIGNAL(auto_knot_limits_changed(qreal, qreal)));
+    connect(m_knot_vector_editor, SIGNAL(knot_vector_manually_edited(QVector<qreal>)), this, SIGNAL(knot_vector_manually_edited(QVector<qreal>)));
 
     v_layout_col0->addWidget(m_knot_vector_editor);
 

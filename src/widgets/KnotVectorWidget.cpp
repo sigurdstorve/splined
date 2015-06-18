@@ -5,7 +5,10 @@
 #include <QFormLayout>
 #include <QLineEdit>
 #include <QDoubleValidator>
+#include <QDebug>
+#include <QSignalBlocker>
 #include "KnotVectorWidget.hpp"
+
 
 // TODO: Make it impossible by the user to set t1 < t0
 
@@ -62,7 +65,6 @@ KnotVectorWidget::KnotVectorWidget(QWidget* parent, Qt::WindowFlags f)
 
     v_layout->addLayout(h_layout);
     setLayout(v_layout);
-    autogenerate_headers();
 
     // setup signals
     connect(rb_clamped, &QRadioButton::clicked, [&]() {
@@ -90,12 +92,7 @@ KnotVectorWidget::KnotVectorWidget(QWidget* parent, Qt::WindowFlags f)
         emit_auto_knot_limits();
     });
 
-}
-
-// TODO: Not needed since indices is shown?
-void KnotVectorWidget::autogenerate_headers() {
-    //QStringList he
-    /// TODO:
+    connect(m_table_widget, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(on_knots_manually_edited(QTableWidgetItem*)));
 }
 
 void KnotVectorWidget::emit_auto_knot_limits() {
@@ -111,6 +108,10 @@ void KnotVectorWidget::emit_limits() {
 }
 
 void KnotVectorWidget::update_knots(const QVector<qreal>& new_knots) {
+    // Needed to avoid on_knots_manually_edited() triggered when elements are
+    // given values.
+    const QSignalBlocker blocker(m_table_widget);
+
     const auto num_knots = new_knots.size();
     m_table_widget->setColumnCount(num_knots);
     m_table_widget->setRowCount(1);
@@ -118,4 +119,13 @@ void KnotVectorWidget::update_knots(const QVector<qreal>& new_knots) {
         auto item = new QTableWidgetItem(QString("%1").arg(new_knots[i]));
         m_table_widget->setItem(0, i, item);
     }
+}
+
+void KnotVectorWidget::on_knots_manually_edited(QTableWidgetItem* item) {
+    const auto num_knots = m_table_widget->columnCount();
+    QVector<qreal> new_knots(num_knots);
+    for (int i = 0; i < num_knots; i++) {
+        new_knots[i] = m_table_widget->item(0, i)->text().toDouble();
+    }
+    emit knot_vector_manually_edited(new_knots);
 }

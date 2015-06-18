@@ -3,12 +3,15 @@
 #include "KnotVectorType.hpp"
 
 class QTableWidget;
+class QTableWidgetItem;
 class QLineEdit;
 
 class KnotVectorWidget : public QWidget {
 Q_OBJECT
 public:
     KnotVectorWidget(QWidget* parent = 0, Qt::WindowFlags f = 0);
+
+    void update_knots(const QVector<qreal>& new_knots);
 
 signals:
     void knot_vector_type_changed(KnotVectorType type);
@@ -18,11 +21,12 @@ signals:
 
     void auto_knot_limits_changed(qreal t0, qreal t1);
 
-public:
-    void update_knots(const QVector<qreal>& new_knots);
+    void knot_vector_manually_edited(QVector<qreal> new_knots);
+
+public slots:
+    void on_knots_manually_edited(QTableWidgetItem* item);
 
 private:
-    void autogenerate_headers();
 
     // for convenience.
     void emit_limits();
